@@ -26,4 +26,5 @@ jobs:
           cd /root/directus/
           git pull origin main
           git status
-          npx directus start
+          npm install
+          npm run start
