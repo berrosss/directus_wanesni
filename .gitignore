@@ -1,5 +1,4 @@
 node_module
-.github
 package-lock.json
 Dockerfile
 node_modules
