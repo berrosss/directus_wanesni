@@ -30,5 +30,7 @@ jobs:
       run: |
          eval "$(ssh-agent -s)"
          ssh-add ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Set Git remote URL
+      run: git remote set-url origin git@github.com:berrosss/repo.git
 
           
