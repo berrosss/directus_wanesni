@@ -22,21 +22,9 @@ jobs:
         port: 22
         script: |
           cd /root/directus_wanesni
-
-          # Check if the PM2 process is running
-          pm2 show directus_wanesni > /dev/null 2>&1
-          PM2_STATUS=$?
-
-          # Pull changes from the repository
           git pull origin main
           git status
-
-          # Install dependencies
           npm install
+          pm2 restart all
 
-          # Start or restart PM2 based on the process status
-          if [ $PM2_STATUS -eq 0 ]; then
-            pm2 restart ecosystem.config.js
-          else
-            npm run start
-          fi
+          
