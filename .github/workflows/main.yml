@@ -11,9 +11,10 @@ jobs:
 
     steps:
     - name: Set up SSH agent
-      run: |
-        eval "$(ssh-agent -s)"
-        ssh-add ${{ secrets.SSH_PRIVATE_KEY }}
+      run: eval "$(ssh-agent -s)"
+    
+    - name: Add SSH private key
+      run: ssh-add ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Checkout code
       uses: actions/checkout@v2
