@@ -26,5 +26,9 @@ jobs:
           git status
           npm install
           pm2 restart all
+    - name: Run custom script
+      run: |
+         eval "$(ssh-agent -s)"
+         ssh-add ${{ secrets.SSH_PRIVATE_KEY }}
 
           
