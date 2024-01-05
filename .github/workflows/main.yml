@@ -1,20 +1,24 @@
 name: Deploy
 
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ main ]
+    branches:
+      - main
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:       
+    steps:
+    - name: Set up SSH agent
+      run: eval "$(ssh-agent -s)"
+    
+    - name: Add SSH private key
+      run: ssh-add ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
       with:
@@ -23,8 +27,8 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
-          cd /home/www/directus_wanesni
+          cd /root/directus_wanesni
           git pull origin main
           git status
           npm install
-          npm run start
+          pm2 restart all
