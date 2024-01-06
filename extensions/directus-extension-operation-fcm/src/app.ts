@@ -6,7 +6,7 @@ export default defineOperationApp({
   icon: "box",
   description:
     "$last.tokens must contain user tokens as JSON. Uses Google Auth Library to retrieve an access token, then notify the users",
-  overview: ({ title, body, type, item_id }) => [
+  overview: ({ title, body, type }) => [
     {
       label: "Title",
       text: title,
@@ -18,10 +18,6 @@ export default defineOperationApp({
     {
       label: "type",
       text: type,
-    },
-    {
-      label: "item_id",
-      text: item_id,
     },
   ],
   options: [
@@ -46,15 +42,6 @@ export default defineOperationApp({
     {
       field: "type",
       name: "type",
-      type: "string",
-      meta: {
-        width: "full",
-        interface: "input",
-      },
-    },
-    {
-      field: "item_id",
-      name: "item_id",
       type: "string",
       meta: {
         width: "full",
