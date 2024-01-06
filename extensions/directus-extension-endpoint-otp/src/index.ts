@@ -8,22 +8,17 @@ export default defineEndpoint((router, context) => {
   const mailService = new MailService({ schema: getSchema });
 
   router.post("/", async (_req, res) => {
+    console.log(Object.keys(_req.body).length > 0);
+    console.log(_req.body.hasOwnProperty("email"));
+    console.log(_req.body.hasOwnProperty("code"));
+    console.log(
+      _req.body.hasOwnProperty("email") && _req.body.hasOwnProperty("code")
+    );
     if (Object.keys(_req.body).length > 0) {
       if (
-        _req.body.hasOwnProperty("email") ||
+        _req.body.hasOwnProperty("email") &&
         _req.body.hasOwnProperty("code")
       ) {
-        res.status(500).send({
-          errors: [
-            {
-              message: "Payload email and code is required",
-              extensions: {
-                code: "INTERNAL_SERVER_ERROR",
-              },
-            },
-          ],
-        });
-      } else {
         const { email, code } = _req.body;
         const data = await usersService.getUserByEmail(email);
         if (data != undefined) {
@@ -59,6 +54,17 @@ export default defineEndpoint((router, context) => {
             ],
           });
         }
+      } else {
+        res.status(500).send({
+          errors: [
+            {
+              message: "Payload email and code is required",
+              extensions: {
+                code: "INTERNAL_SERVER_ERROR",
+              },
+            },
+          ],
+        });
       }
     } else {
       res.status(500).send({
