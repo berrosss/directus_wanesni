@@ -1,5 +1,5 @@
 {
-	"name": "directus-extension-hook-stripe-customer",
+	"name": "directus-extension-hook-register-user",
 	"description": "Please enter a description for your extension",
 	"icon": "extension",
 	"version": "1.0.0",
@@ -13,7 +13,7 @@
 		"type": "hook",
 		"path": "dist/index.js",
 		"source": "src/index.ts",
-		"host": "^10.2.0"
+		"host": "^10.3.0"
 	},
 	"scripts": {
 		"build": "directus-extension build",
@@ -21,11 +21,12 @@
 		"link": "directus-extension link"
 	},
 	"devDependencies": {
-		"@directus/extensions-sdk": "10.2.0",
-		"@types/node": "^20.10.4",
+		"@directus/extensions-sdk": "10.3.0",
+		"@types/node": "^20.10.8",
 		"typescript": "^5.3.3"
 	},
 	"dependencies": {
-		"stripe": "^14.8.0"
+		"@unhead/vue": "^1.8.9",
+		"pinia": "^2.1.7"
 	}
 }
