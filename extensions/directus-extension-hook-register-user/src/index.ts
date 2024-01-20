@@ -1,17 +1,13 @@
 import { defineHook } from "@directus/extensions-sdk";
 import { createError } from "@directus/errors";
 
-export default defineHook(({ filter, action }) => {
+export default defineHook(({ filter, action }, { services }) => {
   filter("users.create", async (input) => {
     var res = isValidMap(input);
-    console.log("input", Object.keys(input!));
     if (!res) {
       throw createError("INVALID_PAYLOAD", "Payload is required");
     }
-  });
-
-  action("users.create", () => {
-    console.log("user created!");
+    return input;
   });
 });
 
@@ -30,6 +26,9 @@ function isValidMap(obj: any) {
     "phone",
     "role",
     "password",
+    "user_type",
+    "description",
+    "fcm_token",
   ];
   for (const field of requiredFields) {
     if (!(field in obj) || obj[field] === "") {
