@@ -1,7 +1,8 @@
 # directus_wanesni
 
-# extionsions 
-## || Hook example ||
+# extonsions 
+
+###### || HOOK EXAMPLE || ########
 ## import { defineHook } from "@directus/extensions-sdk";
 ## import { createError } from "@directus/errors";
 ## export default defineHook(({ filter, action }, { services }) => {
@@ -49,4 +50,65 @@
 ##   action("items.create", () => {
 ##     console.log("Item created!");
 ##   });
+## });
+
+###### || ENDPOINT EXAMPLE || ########
+## export default defineEndpoint((router, context) => {
+##  const { services, getSchema } = context;
+##  const { UsersService } = services;
+##  router.post("/", async (_req: any, res) => {
+##    const schema = await getSchema();
+##    const usersService = new UsersService({
+##      schema,
+##      accountability: _req.accountability,
+##    });
+##   console.log(Object.keys(_req.body).length);
+##    if (Object.keys(_req.body).length > 0) {
+##      if (
+##        _req.body.hasOwnProperty("first_name") &&
+##        _req.body.hasOwnProperty("last_name") &&
+##      ) {
+##        try {
+##          const data = await usersService.createOne({
+##            first_name: _req.body.first_name,
+##            last_name: _req.body.last_name,
+##          });
+##          res.json(data);
+##        } catch (error) {
+##          res.status(500).send({
+##            errors: [
+##              {
+##                message: error,
+##                extensions: {
+##                  code: "INTERNAL_SERVER_ERROR",
+##                },
+##              },
+##            ],
+##          });
+##        }
+##      } else {
+##        res.status(500).send({
+##          errors: [
+##            {
+##              message: "Some fields are missing",
+##              extensions: {
+##                code: "INTERNAL_SERVER_ERROR",
+##              },
+##            },
+##          ],
+##        });
+##      }
+##    } else {
+##      res.status(500).send({
+##        errors: [
+##          {
+##            message: "Payload is required",
+##            extensions: {
+##              code: "INTERNAL_SERVER_ERROR",
+##            },
+##          },
+##        ],
+##      });
+##    }
+##  });
 ## });
